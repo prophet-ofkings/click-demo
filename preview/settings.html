@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Click Capital — Settings</title>
+<link rel="icon" href="../assets/favicon.png" type="image/png">
+<link rel="stylesheet" href="shared-native.css">
+<link rel="stylesheet" href="design-tokens.css">
+<link rel="stylesheet" href="preview-alignment.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { background: #000; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: #fff; min-height: 100vh; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  a { text-decoration: none; color: inherit; }
+
+  /* Phone Frame */
+  .phone-frame {
+    max-width: 390px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: #000;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: calc(16px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 16px calc(16px + env(safe-area-inset-left));
+  }
+  .back-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background: #0F0F0F;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .back-btn:hover { background: #1a1a1a; }
+  .back-btn svg { width: 24px; height: 24px; color: #fff; }
+  .header-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff;
+    text-align: center;
+    flex: 1;
+  }
+  .header-spacer { width: 40px; flex-shrink: 0; }
+
+  /* Content */
+  .content {
+    padding: 0 calc(16px + env(safe-area-inset-left)) calc(40px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-right));
+  }
+
+  /* Section Card */
+  .section-card {
+    background: #0F0F0F;
+    border: 1px solid #1F1F1F;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  /* Setting Item */
+  .setting-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    border-bottom: 1px solid #1F1F1F;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .setting-item:last-child { border-bottom: none; }
+  .setting-item:hover { opacity: 0.8; }
+  .setting-item.no-hover { cursor: default; }
+  .setting-item.no-hover:hover { opacity: 1; }
+  .setting-left {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+  }
+  .icon-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background: rgba(0,255,200,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+  .icon-circle svg {
+    width: 20px;
+    height: 20px;
+    color: #00ffc8;
+  }
+  .setting-text {
+    flex: 1;
+    min-width: 0;
+  }
+  .setting-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 2px;
+  }
+  .setting-subtitle {
+    font-size: 12px;
+    color: #BBBBBB;
+  }
+  .setting-right {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+  .setting-right svg {
+    width: 20px;
+    height: 20px;
+    color: #999;
+  }
+  .checkmark svg {
+    color: #00ffc8;
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Logout Button */
+  .logout-btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #FF3B30;
+    border-radius: 12px;
+    background: transparent;
+    color: #FF3B30;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+  .logout-btn:hover {
+    background: rgba(255,59,48,0.1);
+  }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+
+  <!-- Header -->
+  <div class="header">
+    <a href="dashboard.html" class="back-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </a>
+    <div class="header-title">Settings</div>
+    <div class="header-spacer"></div>
+  </div>
+
+  <div class="content">
+
+    <!-- Language Section -->
+    <div class="section-card">
+      <div class="section-title">Language</div>
+
+      <!-- English (active) -->
+      <div class="setting-item" data-lang="en">
+        <div class="setting-left">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          </div>
+          <div class="setting-text">
+            <div class="setting-name">English</div>
+            <div class="setting-subtitle">English</div>
+          </div>
+        </div>
+        <div class="setting-right checkmark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+      </div>
+
+      <!-- Arabic -->
+      <div class="setting-item" data-lang="ar">
+        <div class="setting-left">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          </div>
+          <div class="setting-text">
+            <div class="setting-name">Arabic</div>
+            <div class="setting-subtitle">العربية</div>
+          </div>
+        </div>
+        <div class="setting-right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+
+      <!-- Spanish -->
+      <div class="setting-item" data-lang="es">
+        <div class="setting-left">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          </div>
+          <div class="setting-text">
+            <div class="setting-name">Spanish</div>
+            <div class="setting-subtitle">Español</div>
+          </div>
+        </div>
+        <div class="setting-right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+
+      <!-- French -->
+      <div class="setting-item" data-lang="fr">
+        <div class="setting-left">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          </div>
+          <div class="setting-text">
+            <div class="setting-name">French</div>
+            <div class="setting-subtitle">Français</div>
+          </div>
+        </div>
+        <div class="setting-right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+
+      <!-- Hindi -->
+      <div class="setting-item" data-lang="hi">
+        <div class="setting-left">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          </div>
+          <div class="setting-text">
+            <div class="setting-name">Hindi</div>
+            <div class="setting-subtitle">हिन्दी</div>
+          </div>
+        </div>
+        <div class="setting-right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Account Section -->
+    <div class="section-card">
+      <div class="section-title">Account</div>
+
+      <!-- Profile -->
+      <a href="profile.html" class="setting-item">
+        <div class="setting-left">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="setting-text">
+            <div class="setting-name">Profile</div>
+            <div class="setting-subtitle">user@clickcapital.ae</div>
+          </div>
+        </div>
+        <div class="setting-right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </a>
+
+      <!-- Security -->
+      <a href="security.html" class="setting-item" style="border-bottom:none">
+        <div class="setting-left">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+          </div>
+          <div class="setting-text">
+            <div class="setting-name">Security</div>
+          </div>
+        </div>
+        <div class="setting-right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </a>
+    </div>
+
+    <!-- Support Section -->
+    <div class="section-card">
+      <div class="section-title">Support</div>
+
+      <!-- Help & FAQ -->
+      <a href="support.html" class="setting-item">
+        <div class="setting-left">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div class="setting-text">
+            <div class="setting-name">Help & FAQ</div>
+          </div>
+        </div>
+        <div class="setting-right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </a>
+
+      <!-- Contact Support -->
+      <div class="setting-item" style="border-bottom:none">
+        <div class="setting-left">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="setting-text">
+            <div class="setting-name">Contact Support</div>
+          </div>
+        </div>
+        <div class="setting-right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="section-card">
+      <div class="section-title">About</div>
+
+      <!-- App Version -->
+      <div class="setting-item no-hover">
+        <div class="setting-left">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          </div>
+          <div class="setting-text">
+            <div class="setting-name">App Version</div>
+            <div class="setting-subtitle">1.0.4</div>
+          </div>
+        </div>
+        <div class="setting-right"></div>
+      </div>
+
+      <!-- Terms & Conditions -->
+      <a href="terms.html" class="setting-item">
+        <div class="setting-left">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <div class="setting-text">
+            <div class="setting-name">Terms & Conditions</div>
+          </div>
+        </div>
+        <div class="setting-right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </a>
+
+      <!-- Privacy Policy -->
+      <a href="privacy.html" class="setting-item" style="border-bottom:none">
+        <div class="setting-left">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </div>
+          <div class="setting-text">
+            <div class="setting-name">Privacy Policy</div>
+          </div>
+        </div>
+        <div class="setting-right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </a>
+    </div>
+
+    <!-- Logout Button -->
+    <a href="login.html" class="logout-btn" style="display:block;text-align:center;text-decoration:none;color:inherit">Logout</a>
+
+  </div>
+
+</div>
+<script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function(){});</script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Click Capital">
+<title>Click Capital — App Preview</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="../assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../assets/icon.png">
+<link rel="stylesheet" href="shared-native.css">
+<link rel="stylesheet" href="design-tokens.css">
+<link rel="stylesheet" href="preview-alignment.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  a { text-decoration: none; color: inherit; }
+
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px var(--cc-space-xxl) 48px;
+  }
+
+  /* Header — app typography */
+  .hub-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .logo {
+    font-size: 36px;
+    font-weight: var(--cc-font-black);
+    color: var(--cc-text-primary);
+    letter-spacing: -0.5px;
+    display: inline-block;
+    position: relative;
+    margin-bottom: var(--cc-space-md);
+  }
+  .logo::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: var(--cc-primary);
+    border-radius: 2px;
+  }
+  .hub-subtitle {
+    font-size: var(--cc-body1-size);
+    color: var(--cc-text-secondary);
+    font-weight: var(--cc-font-regular);
+    margin-top: 10px;
+  }
+
+  /* Sections */
+  .section {
+    margin-bottom: 40px;
+  }
+  .section-title {
+    font-size: var(--cc-caption-size);
+    font-weight: var(--cc-font-bold);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--cc-text-tertiary);
+    margin-bottom: var(--cc-space-lg);
+    padding-left: var(--cc-inner-gap);
+  }
+
+  /* Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--cc-list-gap);
+  }
+
+  /* Screen Card — glass-style, app radius/card feel */
+  .screen-card {
+    background: var(--cc-glass-bg);
+    border: 1px solid var(--cc-glass-border);
+    border-radius: var(--cc-radius-button);
+    padding: var(--cc-space-lg) var(--cc-space-xl);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    color: inherit;
+  }
+  .screen-card:hover {
+    border-color: var(--cc-primary);
+    background: var(--cc-primary-alpha10);
+    transform: translateY(-2px);
+    box-shadow: var(--cc-shadow-glow);
+  }
+  .screen-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .screen-icon svg {
+    width: var(--cc-body-icon-size);
+    height: var(--cc-body-icon-size);
+  }
+  .screen-name {
+    flex: 1;
+    font-size: 15px;
+    font-weight: var(--cc-font-semibold);
+    color: var(--cc-text-primary);
+  }
+  .screen-arrow {
+    flex-shrink: 0;
+    color: var(--cc-text-tertiary);
+    transition: color 0.2s, transform 0.2s;
+  }
+  .screen-card:hover .screen-arrow {
+    color: var(--cc-primary);
+    transform: translateX(2px);
+  }
+  .screen-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Icon backgrounds */
+  .icon-auth { background: rgba(0,255,200,0.1); }
+  .icon-auth svg { color: #00ffc8; }
+  .icon-main { background: rgba(88,166,255,0.1); }
+  .icon-main svg { color: #58A6FF; }
+  .icon-detail { background: rgba(255,149,0,0.1); }
+  .icon-detail svg { color: #FF9500; }
+  .icon-settings { background: rgba(175,130,255,0.1); }
+  .icon-settings svg { color: #AF82FF; }
+
+  /* Footer */
+  .hub-footer {
+    text-align: center;
+    padding-top: 40px;
+    border-top: 1px solid var(--cc-border);
+    margin-top: var(--cc-space-xl);
+  }
+  .hub-footer-text {
+    font-size: var(--cc-caption-size);
+    color: var(--cc-text-tertiary);
+  }
+
+  @media (max-width: 540px) {
+    .page { padding: 40px 16px 32px; }
+    .logo { font-size: 28px; }
+    .hub-subtitle { font-size: 14px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="hub-header">
+    <img class="logo-img" src="../assets/logo.png" alt="Click Capital" style="max-height:56px;width:auto;object-fit:contain;margin-bottom:8px">
+    <div class="hub-subtitle">App Preview &mdash; All Screens</div>
+  </div>
+
+  <!-- Authentication Flow -->
+  <div class="section">
+    <div class="section-title">Authentication Flow</div>
+    <div class="grid">
+
+      <a href="onboarding.html" class="screen-card">
+        <div class="screen-icon icon-auth">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/></svg>
+        </div>
+        <div class="screen-name">Onboarding</div>
+        <div class="screen-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></div>
+      </a>
+
+      <a href="login.html" class="screen-card">
+        <div class="screen-icon icon-auth">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+        </div>
+        <div class="screen-name">Login</div>
+        <div class="screen-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></div>
+      </a>
+
+      <a href="register.html" class="screen-card">
+        <div class="screen-icon icon-auth">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+        </div>
+        <div class="screen-name">Register</div>
+        <div class="screen-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- Main Tabs -->
+  <div class="section">
+    <div class="section-title">Main Tabs</div>
+    <div class="grid">
+
+      <a href="dashboard.html" class="screen-card">
+        <div class="screen-icon icon-main"><span class="cc-icon cc-icon-20" data-icon="home"></span></div>
+        <div class="screen-name">Dashboard</div>
+        <div class="screen-arrow"><span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span></div>
+      </a>
+
+      <a href="properties.html" class="screen-card">
+        <div class="screen-icon icon-main"><span class="cc-icon cc-icon-20" data-icon="business"></span></div>
+        <div class="screen-name">Properties</div>
+        <div class="screen-arrow"><span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span></div>
+      </a>
+
+      <a href="commodities.html" class="screen-card">
+        <div class="screen-icon icon-main"><span class="cc-icon cc-icon-20" data-icon="cube"></span></div>
+        <div class="screen-name">Commodities</div>
+        <div class="screen-arrow"><span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span></div>
+      </a>
+
+      <a href="wallet.html" class="screen-card">
+        <div class="screen-icon icon-main"><span class="cc-icon cc-icon-20" data-icon="wallet"></span></div>
+        <div class="screen-name">Wallet</div>
+        <div class="screen-arrow"><span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span></div>
+      </a>
+
+    </div>
+    <p style="font-size:12px;color:#666;margin-top:12px;padding-left:4px">Main app has 4 tabs. Support is in the top-right header on each screen.</p>
+  </div>
+
+  <!-- Detail Pages -->
+  <div class="section">
+    <div class="section-title">Detail Pages</div>
+    <div class="grid">
+
+      <a href="property-detail.html" class="screen-card">
+        <div class="screen-icon icon-detail"><span class="cc-icon cc-icon-20" data-icon="location"></span></div>
+        <div class="screen-name">Property Detail</div>
+        <div class="screen-arrow"><span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span></div>
+      </a>
+
+      <a href="commodity-detail.html" class="screen-card">
+        <div class="screen-icon icon-detail"><span class="cc-icon cc-icon-20" data-icon="cube"></span></div>
+        <div class="screen-name">Commodity Detail</div>
+        <div class="screen-arrow"><span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span></div>
+      </a>
+
+      <a href="checkout.html" class="screen-card">
+        <div class="screen-icon icon-detail"><span class="cc-icon cc-icon-20" data-icon="checkmark-circle"></span></div>
+        <div class="screen-name">Checkout</div>
+        <div class="screen-arrow"><span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span></div>
+      </a>
+
+      <a href="portfolio.html" class="screen-card">
+        <div class="screen-icon icon-detail"><span class="cc-icon cc-icon-20" data-icon="trending-up"></span></div>
+        <div class="screen-name">Portfolio</div>
+        <div class="screen-arrow"><span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span></div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- Settings & Account -->
+  <div class="section">
+    <div class="section-title">Settings, Support &amp; Account</div>
+    <div class="grid">
+
+      <a href="support.html" class="screen-card">
+        <div class="screen-icon icon-settings"><span class="cc-icon cc-icon-20" data-icon="help-circle"></span></div>
+        <div class="screen-name">Support</div>
+        <div class="screen-arrow"><span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span></div>
+      </a>
+
+      <a href="settings.html" class="screen-card">
+        <div class="screen-icon icon-settings"><span class="cc-icon cc-icon-20" data-icon="settings"></span></div>
+        <div class="screen-name">Settings</div>
+        <div class="screen-arrow"><span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span></div>
+      </a>
+
+      <a href="profile.html" class="screen-card">
+        <div class="screen-icon icon-settings"><span class="cc-icon cc-icon-20" data-icon="person"></span></div>
+        <div class="screen-name">Profile</div>
+        <div class="screen-arrow"><span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span></div>
+      </a>
+
+      <a href="security.html" class="screen-card">
+        <div class="screen-icon icon-settings"><span class="cc-icon cc-icon-20" data-icon="security"></span></div>
+        <div class="screen-name">Security</div>
+        <div class="screen-arrow"><span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span></div>
+      </a>
+
+      <a href="terms.html" class="screen-card">
+        <div class="screen-icon icon-settings"><span class="cc-icon cc-icon-20" data-icon="document-text"></span></div>
+        <div class="screen-name">Terms &amp; Conditions</div>
+        <div class="screen-arrow"><span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span></div>
+      </a>
+
+      <a href="privacy.html" class="screen-card">
+        <div class="screen-icon icon-settings"><span class="cc-icon cc-icon-20" data-icon="security"></span></div>
+        <div class="screen-name">Privacy Policy</div>
+        <div class="screen-arrow"><span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span></div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="hub-footer">
+    <div class="hub-footer-text">Click Capital v1.0.4 &nbsp;|&nbsp; Bundle: app.clickcapital.ae</div>
+  </div>
+
+</div>
+<script src="icons-ref.js"></script>
+<script>document.addEventListener('DOMContentLoaded', function(){ if (window.CC_Icons) CC_Icons.inject(); });</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+</script>
+</body>
+</html>

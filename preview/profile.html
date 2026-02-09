@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Click Capital — Profile</title>
+<link rel="icon" href="../assets/favicon.png" type="image/png">
+<link rel="stylesheet" href="shared-native.css">
+<link rel="stylesheet" href="design-tokens.css">
+<link rel="stylesheet" href="preview-alignment.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { background: #000; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: #fff; min-height: 100vh; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  a { text-decoration: none; color: inherit; }
+
+  /* Phone Frame */
+  .phone-frame {
+    max-width: 390px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: #000;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: calc(16px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 16px calc(16px + env(safe-area-inset-left));
+  }
+  .back-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background: #0F0F0F;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .back-btn:hover { background: #1a1a1a; }
+  .back-btn svg { width: 24px; height: 24px; color: #fff; }
+  .header-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff;
+    text-align: center;
+    flex: 1;
+  }
+  .header-spacer { width: 40px; flex-shrink: 0; }
+
+  /* Content */
+  .content { padding: 0 calc(16px + env(safe-area-inset-left)) calc(40px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-right)); }
+
+  /* Avatar Section */
+  .avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 0;
+  }
+  .avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 48px;
+    background: rgba(0,255,200,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .avatar svg {
+    width: 48px;
+    height: 48px;
+    color: #00ffc8;
+  }
+  .user-name {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .user-email {
+    font-size: 14px;
+    color: #BBBBBB;
+  }
+
+  /* Section Card */
+  .section-card {
+    background: #0F0F0F;
+    border: 1px solid #1F1F1F;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  /* Profile Field */
+  .field {
+    padding: 14px 0;
+    border-bottom: 1px solid #1F1F1F;
+  }
+  .field:last-child { border-bottom: none; }
+  .field-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .field-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .field-value.verified {
+    color: #30D158;
+  }
+  .field-value.premium {
+    color: #00ffc8;
+  }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+
+  <!-- Header -->
+  <div class="header">
+    <a href="settings.html" class="back-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </a>
+    <div class="header-title">Profile</div>
+    <div class="header-spacer"></div>
+  </div>
+
+  <div class="content">
+
+    <!-- Avatar Section -->
+    <div class="avatar-section">
+      <div class="avatar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div class="user-name">Ahmed Al-Rashid</div>
+      <div class="user-email">ahmed@clickcapital.ae</div>
+    </div>
+
+    <!-- Personal Information -->
+    <div class="section-card">
+      <div class="section-title">Personal Information</div>
+
+      <div class="field">
+        <div class="field-label">Full Name</div>
+        <div class="field-value">Ahmed Al-Rashid</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Email</div>
+        <div class="field-value">ahmed@clickcapital.ae</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Phone</div>
+        <div class="field-value">+971 50 123 4567</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">KYC Status</div>
+        <div class="field-value verified">Verified</div>
+      </div>
+    </div>
+
+    <!-- Account Details -->
+    <div class="section-card">
+      <div class="section-title">Account Details</div>
+
+      <div class="field">
+        <div class="field-label">Account ID</div>
+        <div class="field-value">CC-13495</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Member Since</div>
+        <div class="field-value">January 2025</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Investor Level</div>
+        <div class="field-value premium">Premium</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function(){});</script>
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Click Capital — Sign In</title>
+  <link rel="icon" href="../assets/favicon.png" type="image/png">
+  <link rel="stylesheet" href="shared-native.css">
+  <link rel="stylesheet" href="design-tokens.css">
+<link rel="stylesheet" href="preview-alignment.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #000;
+      --card-bg: #0F0F0F;
+      --border: #1F1F1F;
+      --accent: #00ffc8;
+      --text-primary: #FFFFFF;
+      --text-secondary: #BBBBBB;
+      --text-tertiary: #999999;
+      --success: #30D158;
+      --warning: #FF9500;
+      --danger: #FF3B30;
+      --info: #5AC8FA;
+      --glass-bg: rgba(15, 15, 15, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --accent-alpha10: rgba(0, 255, 200, 0.1);
+      --accent-alpha20: rgba(0, 255, 200, 0.2);
+      --radius: 12px;
+    }
+
+    html, body {
+      height: 100%;
+      background: #000;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .phone-frame {
+      max-width: 390px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: calc(40px + env(safe-area-inset-top)) calc(24px + env(safe-area-inset-left)) 40px calc(24px + env(safe-area-inset-right));
+      position: relative;
+    }
+
+    /* Back button */
+    .back-btn {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+    .back-btn:hover {
+      background: rgba(25, 25, 25, 0.8);
+      border-color: rgba(255,255,255,0.12);
+    }
+    .back-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: var(--text-secondary);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .content {
+      width: 100%;
+      max-width: 342px;
+    }
+
+    /* Logo */
+    .logo-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    .logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* Headings */
+    .title {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+    .subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-bottom: 40px;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      margin-bottom: 8px;
+      letter-spacing: 0.3px;
+    }
+    .input-wrap {
+      position: relative;
+    }
+    .form-input {
+      width: 100%;
+      padding: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .form-input::placeholder {
+      color: var(--text-tertiary);
+    }
+    .form-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-alpha10);
+    }
+
+    /* Password toggle */
+    .toggle-pw {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .toggle-pw svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: var(--text-tertiary);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke 0.2s ease;
+    }
+    .toggle-pw:hover svg {
+      stroke: var(--text-secondary);
+    }
+
+    /* Buttons */
+    .btn-primary {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: var(--radius);
+      background: var(--accent);
+      color: #000;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      margin-top: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .btn-primary:hover::before { opacity: 1; }
+    .btn-primary:hover {
+      box-shadow: 0 4px 24px rgba(0, 255, 200, 0.35);
+    }
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: transparent;
+      color: var(--accent);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-secondary svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .btn-secondary:hover {
+      background: var(--accent-alpha10);
+      border-color: var(--accent);
+    }
+    .btn-secondary:active {
+      transform: scale(0.98);
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    .footer a:hover {
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-frame">
+    <!-- Back -->
+    <a href="onboarding.html" class="back-btn" aria-label="Back">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+
+    <div class="content">
+      <!-- Logo -->
+      <div class="logo-wrap">
+        <img class="logo" src="../assets/logo.png" alt="Click Capital">
+      </div>
+
+      <!-- Heading -->
+      <h1 class="title">Welcome Back</h1>
+      <p class="subtitle">Sign in to continue to Click Capital</p>
+
+      <!-- Form -->
+      <form id="loginForm" onsubmit="event.preventDefault();location.href='dashboard.html';return false">
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <div class="input-wrap">
+            <input class="form-input" id="email" type="email" placeholder="you@example.com" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <div class="input-wrap">
+            <input class="form-input" id="password" type="password" placeholder="••••••••" autocomplete="current-password" style="padding-right: 48px;">
+            <button type="button" class="toggle-pw" id="togglePw" aria-label="Show password">
+              <!-- Eye icon -->
+              <svg id="eyeOpen" viewBox="0 0 24 24">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              <!-- Eye-off icon (hidden by default) -->
+              <svg id="eyeClosed" viewBox="0 0 24 24" style="display:none;">
+                <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/>
+                <path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/>
+                <path d="M14.12 14.12a3 3 0 11-4.24-4.24"/>
+                <line x1="1" y1="1" x2="23" y2="23"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">Sign In</button>
+
+        <button type="button" class="btn-secondary">
+          <!-- Face ID icon -->
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="4"/>
+            <circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/>
+            <circle cx="15" cy="10" r="1" fill="currentColor" stroke="none"/>
+            <path d="M9 15c1.5 1.5 4.5 1.5 6 0"/>
+          </svg>
+          Sign in with Face ID
+        </a>
+      </form>
+
+      <!-- Footer -->
+      <div class="footer">
+        Don't have an account? <a href="register.html">Sign Up</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const pwInput = document.getElementById('password');
+      const toggleBtn = document.getElementById('togglePw');
+      const eyeOpen = document.getElementById('eyeOpen');
+      const eyeClosed = document.getElementById('eyeClosed');
+
+      toggleBtn.addEventListener('click', () => {
+        const isPassword = pwInput.type === 'password';
+        pwInput.type = isPassword ? 'text' : 'password';
+        eyeOpen.style.display = isPassword ? 'none' : 'block';
+        eyeClosed.style.display = isPassword ? 'block' : 'none';
+      });
+    })();
+  </script>
+<script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function(){});</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+/**
+ * Preview alignment — consistent layout and icon sizes (app 1:1)
+ * Use after design-tokens.css. Ensures all elements are perfectly aligned for presentation.
+ */
+
+/* Icon wrappers: same sizes as app (body 20px, nav 24px) */
+.cc-icon,
+[data-icon] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cc-icon-20 {
+  width: var(--cc-body-icon-size);
+  height: var(--cc-body-icon-size);
+}
+.cc-icon-24 {
+  width: var(--cc-nav-icon-size);
+  height: var(--cc-nav-icon-size);
+}
+.cc-icon svg,
+[data-icon] svg {
+  width: 100%;
+  height: 100%;
+  color: inherit;
+}
+.settings-btn svg,
+.back-btn svg,
+.action-icon svg,
+.investment-icon svg,
+.view-all svg,
+.investment-value svg,
+.filter-btn svg,
+.doc-icon svg,
+.doc-chevron svg,
+.stat-icon svg,
+.comm-type svg,
+.prop-location svg,
+.hero-location svg {
+  width: var(--cc-body-icon-size);
+  height: var(--cc-body-icon-size);
+}
+.cc-icon-24,
+.tab svg,
+.nav-tabs .tab svg {
+  width: var(--cc-nav-icon-size);
+  height: var(--cc-nav-icon-size);
+}
+
+/* Section alignment */
+.section-title {
+  margin-bottom: var(--cc-space-lg);
+}
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--cc-space-lg);
+  gap: var(--cc-space-md);
+}
+.section-header .section-title {
+  margin-bottom: 0;
+}
+
+/* List rows: min touch target, aligned content */
+.investment-item,
+.inv-item,
+.prop-card,
+.comm-card {
+  display: flex;
+  align-items: center;
+  min-height: var(--cc-touch-min);
+  gap: var(--cc-list-gap);
+}
+.investment-info,
+.investment-value {
+  align-items: center;
+}
+
+/* Card inner spacing */
+.glass-card,
+.asset-allocation,
+.action-btn {
+  padding: var(--cc-card-padding);
+}
+
+/* Header row: support + settings aligned */
+.header > div:last-child,
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--cc-space-sm);
+}
+
+/* Tab bar: equal flex, centered labels */
+.nav-tabs .tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--cc-inner-gap);
+  padding-top: var(--cc-inner-gap);
+}
+
+/* Context colors for injected icons */
+.nw-change .cc-icon,
+.nw-change [data-icon],
+.nw-change svg {
+  color: var(--cc-success);
+}

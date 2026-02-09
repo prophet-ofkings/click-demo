@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Click Capital — Terms & Conditions</title>
+<link rel="icon" href="../assets/favicon.png" type="image/png">
+<link rel="stylesheet" href="shared-native.css">
+<link rel="stylesheet" href="design-tokens.css">
+<link rel="stylesheet" href="preview-alignment.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { background: #000; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: #fff; min-height: 100vh; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  a { text-decoration: none; color: inherit; }
+
+  /* Phone Frame */
+  .phone-frame {
+    max-width: 390px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: #000;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    align-items: center;
+    padding: calc(16px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right)) 16px calc(20px + env(safe-area-inset-left));
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    gap: 12px;
+  }
+  .back-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #0F0F0F;
+    border: 1px solid #1F1F1F;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+  .back-btn:hover {
+    border-color: rgba(255,255,255,0.15);
+    background: #1a1a1a;
+  }
+  .back-btn svg {
+    width: 20px;
+    height: 20px;
+    color: #fff;
+  }
+  .header-title {
+    flex: 1;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.5px;
+  }
+  .header-spacer {
+    width: 40px;
+    flex-shrink: 0;
+  }
+
+  /* Content */
+  .content {
+    padding: 8px calc(20px + env(safe-area-inset-left)) calc(40px + env(safe-area-inset-bottom)) calc(20px + env(safe-area-inset-right));
+  }
+
+  .last-updated {
+    font-size: 12px;
+    color: #999;
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+
+  .legal-section {
+    margin-top: 24px;
+  }
+  .legal-section:first-of-type {
+    margin-top: 16px;
+  }
+  .legal-heading {
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+    letter-spacing: -0.1px;
+  }
+  .legal-text {
+    font-size: 14px;
+    color: #BBBBBB;
+    line-height: 22px;
+  }
+  .legal-text a {
+    color: #00ffc8;
+    text-decoration: underline;
+    text-decoration-color: rgba(0,255,200,0.3);
+    text-underline-offset: 2px;
+  }
+  .legal-text a:hover {
+    text-decoration-color: #00ffc8;
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in {
+    animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+
+  <!-- Header -->
+  <div class="header">
+    <a href="settings.html" class="back-btn" aria-label="Go back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </a>
+    <div class="header-title">Terms & Conditions</div>
+    <div class="header-spacer"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="content fade-in" style="animation-delay: 0.05s">
+    <div class="last-updated">Last Updated: February 2026</div>
+
+    <div class="legal-section">
+      <div class="legal-heading">1. Acceptance of Terms</div>
+      <p class="legal-text">By accessing and using the Click Capital application, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by these terms, please do not use this service.</p>
+    </div>
+
+    <div class="legal-section">
+      <div class="legal-heading">2. Investment Risks</div>
+      <p class="legal-text">All investments carry risk. The value of your investments can go down as well as up. Past performance is not indicative of future results. You should carefully consider your financial situation and risk tolerance before making any investment decisions.</p>
+    </div>
+
+    <div class="legal-section">
+      <div class="legal-heading">3. User Accounts</div>
+      <p class="legal-text">You are responsible for maintaining the confidentiality of your account credentials. Any activity that occurs under your account is your responsibility. You must notify us immediately of any unauthorized use of your account.</p>
+    </div>
+
+    <div class="legal-section">
+      <div class="legal-heading">4. KYC Requirements</div>
+      <p class="legal-text">We require all users to complete Know Your Customer (KYC) verification before accessing investment features. This includes providing valid government-issued identification and proof of address.</p>
+    </div>
+
+    <div class="legal-section">
+      <div class="legal-heading">5. Payment Processing</div>
+      <p class="legal-text">Payments are processed through authorized third-party payment providers. We do not store your full payment information on our servers. All transactions are encrypted and processed in compliance with industry standards.</p>
+    </div>
+
+    <div class="legal-section">
+      <div class="legal-heading">6. Governing Law</div>
+      <p class="legal-text">These terms shall be governed by the laws of the United Arab Emirates. Any disputes arising from these terms will be subject to the exclusive jurisdiction of the courts in the UAE.</p>
+    </div>
+
+    <div class="legal-section">
+      <div class="legal-heading">7. Contact</div>
+      <p class="legal-text">For questions about these Terms & Conditions, contact us at <a href="mailto:support@clickcapital.ae">support@clickcapital.ae</a>.</p>
+    </div>
+  </div>
+
+</div>
+<script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function(){});</script>
+</body>
+</html>

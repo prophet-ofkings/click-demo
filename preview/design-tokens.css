@@ -1,0 +1,124 @@
+/**
+ * Click Capital design tokens — 1:1 with app (lib/constants/colors.ts, theme.ts)
+ * Use these in preview HTML so the GitHub Pages link feels like the native app.
+ */
+
+:root {
+  /* Backgrounds */
+  --cc-bg-primary: #000000;
+  --cc-bg-secondary: #0F0F0F;
+  --cc-bg-tertiary: #1A1A1A;
+  --cc-bg-card: #0F0F0F;
+  --cc-bg-hover: #121212;
+
+  /* Text */
+  --cc-text-primary: #FFFFFF;
+  --cc-text-secondary: #BBBBBB;
+  --cc-text-tertiary: #999999;
+
+  /* Accent & status */
+  --cc-primary: #00ffc8;
+  --cc-accent: #30D158;
+  --cc-success: #30D158;
+  --cc-warning: #FF9500;
+  --cc-danger: #FF3B30;
+  --cc-info: #5AC8FA;
+  --cc-live: #30D158;
+  --cc-coming-soon: #FF9500;
+  --cc-sold-out: #FF3B30;
+
+  /* Primary alphas */
+  --cc-primary-alpha10: rgba(0, 255, 200, 0.1);
+  --cc-primary-alpha20: rgba(0, 255, 200, 0.2);
+  --cc-primary-alpha30: rgba(0, 255, 200, 0.3);
+
+  /* Glass */
+  --cc-glass-bg: rgba(15, 15, 15, 0.7);
+  --cc-glass-border: rgba(255, 255, 255, 0.08);
+  --cc-glass-highlight: rgba(255, 255, 255, 0.05);
+  --cc-glass-border-hover: rgba(255, 255, 255, 0.12);
+
+  /* Gradients (stops) */
+  --cc-gradient-start: #00ffc8;
+  --cc-gradient-mid: #00e6b4;
+  --cc-gradient-end: #00d4aa;
+
+  /* Borders */
+  --cc-border: #1F1F1F;
+  --cc-border-light: #3D3D3D;
+
+  /* Spacing (app: 4,8,12,16,20,24,32; section 24, cardPadding 20, listGap 12, innerGap 8) */
+  --cc-space-xs: 4px;
+  --cc-space-sm: 8px;
+  --cc-space-md: 12px;
+  --cc-space-lg: 16px;
+  --cc-space-xl: 20px;
+  --cc-space-xxl: 24px;
+  --cc-space-xxxl: 32px;
+  --cc-section-gap: 24px;
+  --cc-card-padding: 20px;
+  --cc-list-gap: 12px;
+  --cc-inner-gap: 8px;
+
+  /* Border radius (app: badge 8, button/input 12, card 16, container 20) */
+  --cc-radius-badge: 8px;
+  --cc-radius-button: 12px;
+  --cc-radius-input: 12px;
+  --cc-radius-card: 16px;
+  --cc-radius-container: 20px;
+  --cc-radius-sm: 8px;
+  --cc-radius-lg: 16px;
+
+  /* Typography — Inter weights 400,500,600,700,800,900 */
+  --cc-font-regular: 400;
+  --cc-font-medium: 500;
+  --cc-font-semibold: 600;
+  --cc-font-bold: 700;
+  --cc-font-extrabold: 800;
+  --cc-font-black: 900;
+
+  /* Display: 36–40px Black (hero numbers) */
+  --cc-display-size: 40px;
+  --cc-display-line: 1.2;
+  --cc-display-letter: -1px;
+  /* Headings: 20–28px ExtraBold */
+  --cc-h1-size: 28px;
+  --cc-h1-line: 1.29;
+  --cc-h1-letter: -0.5px;
+  --cc-h2-size: 24px;
+  --cc-h2-line: 1.33;
+  --cc-h3-size: 20px;
+  --cc-h3-line: 1.4;
+  /* Subheadings: 16–18px Bold */
+  --cc-subtitle1-size: 18px;
+  --cc-subtitle2-size: 16px;
+  /* Body: 14–16px Regular */
+  --cc-body1-size: 16px;
+  --cc-body2-size: 14px;
+  /* Caption: 12px SemiBold */
+  --cc-caption-size: 12px;
+  --cc-caption-letter: 0.3px;
+  --cc-caption-upper-size: 11px;
+  --cc-caption-upper-letter: 0.8px;
+
+  /* Shadows (app card: 0 8px 24px rgba(0,0,0,0.3); glow: 0 0 20px primary 0.2) */
+  --cc-shadow-card: 0 8px 24px rgba(0, 0, 0, 0.3);
+  --cc-shadow-glow: 0 0 20px rgba(0, 255, 200, 0.2);
+  --cc-shadow-button: 0 4px 12px rgba(0, 255, 200, 0.3);
+  --cc-shadow-float: 0 16px 32px rgba(0, 0, 0, 0.5);
+
+  /* Native feel: min touch target (iOS HIG 44pt) */
+  --cc-touch-min: 44px;
+  --cc-nav-icon-size: 24px;
+  --cc-body-icon-size: 20px;
+}
+
+/* Base defaults when this file is loaded (after shared-native.css) */
+body {
+  background: var(--cc-bg-primary);
+  color: var(--cc-text-primary);
+}
+
+.phone-frame {
+  background: var(--cc-bg-primary);
+}

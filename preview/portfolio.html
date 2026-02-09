@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Click Capital — My Portfolio</title>
+<link rel="icon" href="../assets/favicon.png" type="image/png">
+<link rel="stylesheet" href="shared-native.css">
+<link rel="stylesheet" href="design-tokens.css">
+<link rel="stylesheet" href="preview-alignment.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { background: #000; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: #fff; min-height: 100vh; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  a { text-decoration: none; color: inherit; }
+
+  /* Phone Frame */
+  .phone-frame {
+    max-width: 390px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: #000;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: calc(16px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 16px calc(16px + env(safe-area-inset-left));
+  }
+  .back-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background: #0F0F0F;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .back-btn:hover { background: #1a1a1a; }
+  .back-btn svg { width: 24px; height: 24px; color: #fff; }
+  .header-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff;
+    text-align: center;
+    flex: 1;
+  }
+  .header-spacer { width: 40px; flex-shrink: 0; }
+
+  /* Content */
+  .content { padding: 0 calc(16px + env(safe-area-inset-left)) calc(40px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-right)); }
+
+  /* Summary Card */
+  .summary-card {
+    background: #0F0F0F;
+    border: 1px solid #1F1F1F;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .summary-row:last-child { margin-bottom: 0; }
+  .summary-item-right { text-align: right; }
+  .summary-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #BBBBBB;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .summary-value {
+    font-size: 24px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .summary-value.accent { color: #00ffc8; }
+  .summary-value.success { color: #30D158; }
+
+  /* Filter Tabs */
+  .filter-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .filter-btn {
+    flex: 1;
+    padding: 8px 16px;
+    border-radius: 12px;
+    border: 1px solid #1F1F1F;
+    background: transparent;
+    color: #BBBBBB;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: rgba(0,255,200,0.3); }
+  .filter-btn.active {
+    background: rgba(0,255,200,0.2);
+    border-color: #00ffc8;
+    color: #00ffc8;
+  }
+
+  /* Investment Card */
+  .investment-card {
+    background: #0F0F0F;
+    border: 1px solid #1F1F1F;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .card-date {
+    font-size: 12px;
+    color: #BBBBBB;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+  .badge-active {
+    background: rgba(48,209,88,0.15);
+    color: #30D158;
+  }
+  .badge-pending {
+    background: rgba(255,149,0,0.15);
+    color: #FF9500;
+  }
+  .badge-completed {
+    background: rgba(48,209,88,0.15);
+    color: #30D158;
+  }
+
+  /* Stats Grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .stat-item {}
+  .stat-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #BBBBBB;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .stat-value {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .stat-value.accent { color: #00ffc8; }
+  .stat-value.success { color: #30D158; }
+  .stat-value.neutral { color: #999; }
+
+  /* View Details */
+  .view-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding-top: 16px;
+    border-top: 1px solid #1F1F1F;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .view-details:hover { opacity: 0.8; }
+  .view-details-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: #00ffc8;
+  }
+  .view-details svg {
+    width: 16px;
+    height: 16px;
+    color: #00ffc8;
+  }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+
+  <!-- Header -->
+  <div class="header">
+    <a href="dashboard.html" class="back-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </a>
+    <div class="header-title">My Portfolio</div>
+    <div class="header-spacer"></div>
+  </div>
+
+  <div class="content">
+
+    <!-- Summary Card -->
+    <div class="summary-card">
+      <div class="summary-row">
+        <div>
+          <div class="summary-label">Total Invested</div>
+          <div class="summary-value">$115,000.00</div>
+        </div>
+        <div class="summary-item-right">
+          <div class="summary-label">Current Value</div>
+          <div class="summary-value accent">$127,450.00</div>
+        </div>
+      </div>
+      <div class="summary-row">
+        <div>
+          <div class="summary-label">Total Returns</div>
+          <div class="summary-value success">+$12,450.00</div>
+        </div>
+        <div class="summary-item-right">
+          <div class="summary-label">ROI</div>
+          <div class="summary-value success">+10.83%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="active">Active</button>
+      <button class="filter-btn" data-filter="completed">Completed</button>
+    </div>
+
+    <!-- Investment Cards -->
+    <div id="investments">
+
+      <!-- Card 1: Marina Heights Residency -->
+      <div class="investment-card" data-status="active">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Marina Heights Residency</div>
+            <div class="card-date">Jan 15, 2026</div>
+          </div>
+          <span class="badge badge-active">Active</span>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-label">Invested</div>
+            <div class="stat-value">$25,000.00</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Current Value</div>
+            <div class="stat-value accent">$27,250.00</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Returns</div>
+            <div class="stat-value success">+$2,250.00</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">ROI</div>
+            <div class="stat-value success">+9.00%</div>
+          </div>
+        </div>
+        <a href="property-detail.html" class="view-details">
+          <span class="view-details-text">View Details</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+
+      <!-- Card 2: Gold Reserve Fund -->
+      <div class="investment-card" data-status="active">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Gold Reserve Fund</div>
+            <div class="card-date">Feb 1, 2026</div>
+          </div>
+          <span class="badge badge-active">Active</span>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-label">Invested</div>
+            <div class="stat-value">$15,000.00</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Current Value</div>
+            <div class="stat-value accent">$15,870.00</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Returns</div>
+            <div class="stat-value success">+$870.00</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">ROI</div>
+            <div class="stat-value success">+5.80%</div>
+          </div>
+        </div>
+        <a href="commodity-detail.html" class="view-details">
+          <span class="view-details-text">View Details</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+
+      <!-- Card 3: Palm View Villas -->
+      <div class="investment-card" data-status="pending">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Palm View Villas</div>
+            <div class="card-date">Jan 28, 2026</div>
+          </div>
+          <span class="badge badge-pending">Pending</span>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-label">Invested</div>
+            <div class="stat-value">$10,000.00</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Current Value</div>
+            <div class="stat-value accent">$10,000.00</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Returns</div>
+            <div class="stat-value neutral">$0.00</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">ROI</div>
+            <div class="stat-value neutral">0.00%</div>
+          </div>
+        </div>
+        <a href="property-detail.html" class="view-details">
+          <span class="view-details-text">View Details</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Filter tab toggle
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.investment-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Update active state
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.getAttribute('data-filter');
+
+      cards.forEach(card => {
+        const status = card.getAttribute('data-status');
+        if (filter === 'all') {
+          card.style.display = '';
+        } else if (filter === 'active') {
+          card.style.display = (status === 'active' || status === 'pending') ? '' : 'none';
+        } else if (filter === 'completed') {
+          card.style.display = status === 'completed' ? '' : 'none';
+        }
+      });
+    });
+  });
+</script>
+<script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function(){});</script>
+</body>
+</html>

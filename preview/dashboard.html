@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Click Capital — Dashboard</title>
+<link rel="icon" href="../assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="../assets/icon.png">
+<link rel="stylesheet" href="shared-native.css">
+<link rel="stylesheet" href="design-tokens.css">
+<link rel="stylesheet" href="preview-alignment.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  a { text-decoration: none; color: inherit; }
+
+  /* Phone Frame — app max width, safe area */
+  .phone-frame {
+    max-width: 390px;
+    margin: 0 auto;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Header — glass blur, app typography h1 */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: calc(var(--cc-space-md) + env(safe-area-inset-top)) calc(var(--cc-space-xl) + env(safe-area-inset-right)) var(--cc-space-lg) calc(var(--cc-space-xl) + env(safe-area-inset-left));
+    border-bottom: 1px solid var(--cc-glass-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(0,0,0,0.8);
+  }
+  .header-greeting {
+    color: var(--cc-text-secondary);
+    font-size: var(--cc-body2-size);
+    font-weight: var(--cc-font-regular);
+    margin-bottom: var(--cc-space-xs);
+  }
+  .header-title {
+    font-size: var(--cc-h1-size);
+    font-weight: var(--cc-font-extrabold);
+    color: var(--cc-text-primary);
+    letter-spacing: var(--cc-h1-letter);
+    line-height: var(--cc-h1-line);
+  }
+  .settings-btn {
+    width: var(--cc-touch-min);
+    height: var(--cc-touch-min);
+    border-radius: 14px;
+    background: var(--cc-glass-bg);
+    border: 1px solid var(--cc-glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .settings-btn:hover {
+    border-color: var(--cc-glass-border-hover);
+  }
+  .settings-btn svg {
+    width: var(--cc-body-icon-size);
+    height: var(--cc-body-icon-size);
+    color: var(--cc-text-primary);
+  }
+
+  /* Content — app section 24px, card padding 20px */
+  .content {
+    padding: var(--cc-section-gap) calc(var(--cc-space-xl) + env(safe-area-inset-left)) calc(100px + env(safe-area-inset-bottom)) calc(var(--cc-space-xl) + env(safe-area-inset-right));
+  }
+
+  /* Glass Card — 1:1 app GlassCard */
+  .glass-card {
+    background: var(--cc-glass-bg);
+    border: 1px solid var(--cc-glass-border);
+    border-radius: var(--cc-radius-card);
+    padding: var(--cc-card-padding);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--cc-shadow-card);
+  }
+  .glass-card-no-pad {
+    background: var(--cc-glass-bg);
+    border: 1px solid var(--cc-glass-border);
+    border-radius: var(--cc-radius-card);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Net Worth Card — app NetWorthCard: caption label, display value */
+  .net-worth-card {
+    margin-bottom: var(--cc-section-gap);
+    position: relative;
+  }
+  .net-worth-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--cc-primary-alpha30), transparent);
+    border-radius: var(--cc-radius-card) 0 0 var(--cc-radius-card);
+  }
+  .net-worth-card::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: var(--cc-radius-card);
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(0,255,200,0.15), transparent 50%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+  .nw-label {
+    font-size: var(--cc-caption-size);
+    font-weight: var(--cc-font-semibold);
+    color: var(--cc-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: var(--cc-caption-upper-letter);
+    margin-bottom: var(--cc-space-sm);
+  }
+  .nw-value-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: var(--cc-space-md);
+  }
+  .nw-currency {
+    font-size: 24px;
+    font-weight: var(--cc-font-bold);
+    color: var(--cc-primary);
+    margin-top: 6px;
+    margin-right: 2px;
+  }
+  .nw-value {
+    font-size: var(--cc-display-size);
+    font-weight: var(--cc-font-black);
+    color: var(--cc-primary);
+    letter-spacing: var(--cc-display-letter);
+    line-height: var(--cc-display-line);
+  }
+  .nw-change {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--cc-inner-gap);
+    background: rgba(48,209,88,0.15);
+    padding: 6px 10px;
+    border-radius: var(--cc-radius-badge);
+    margin-bottom: var(--cc-space-xl);
+  }
+  .nw-change svg {
+    width: 14px;
+    height: 14px;
+    color: var(--cc-success);
+  }
+  .nw-change-text {
+    font-size: 13px;
+    font-weight: var(--cc-font-semibold);
+    color: var(--cc-success);
+  }
+  .nw-divider {
+    height: 1px;
+    background: var(--cc-glass-border);
+    margin-bottom: var(--cc-space-xl);
+  }
+  .nw-stats {
+    display: flex;
+    align-items: center;
+  }
+  .nw-stat {
+    flex: 1;
+  }
+  .nw-stat-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--cc-glass-border);
+    margin: 0 var(--cc-space-lg);
+  }
+  .nw-stat-label {
+    font-size: 11px;
+    font-weight: var(--cc-font-semibold);
+    color: var(--cc-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: var(--cc-caption-upper-letter);
+    margin-bottom: 6px;
+  }
+  .nw-stat-value {
+    font-size: var(--cc-subtitle1-size);
+    font-weight: var(--cc-font-bold);
+    color: var(--cc-text-primary);
+  }
+  .nw-stat-value.green {
+    color: var(--cc-success);
+  }
+
+  /* Section Title — app h3 */
+  .section-title {
+    font-size: var(--cc-h3-size);
+    font-weight: var(--cc-font-extrabold);
+    color: var(--cc-text-primary);
+    margin-bottom: var(--cc-space-lg);
+    line-height: var(--cc-h3-line);
+  }
+
+  /* Asset Allocation — glass card like app */
+  .asset-allocation {
+    background: var(--cc-glass-bg);
+    border: 1px solid var(--cc-glass-border);
+    border-radius: var(--cc-radius-card);
+    padding: var(--cc-card-padding);
+    margin-bottom: var(--cc-section-gap);
+    box-shadow: var(--cc-shadow-card);
+  }
+  .donut-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .donut-chart {
+    position: relative;
+    width: 180px;
+    height: 180px;
+  }
+  .donut-chart svg {
+    transform: rotate(-90deg);
+  }
+  .donut-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .donut-center-value {
+    font-size: 22px;
+    font-weight: var(--cc-font-extrabold);
+    color: var(--cc-text-primary);
+  }
+  .donut-center-label {
+    font-size: var(--cc-caption-upper-size);
+    color: var(--cc-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: var(--cc-caption-upper-letter);
+    margin-top: 2px;
+  }
+  .legend {
+    display: flex;
+    flex-direction: column;
+    gap: var(--cc-list-gap);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+  .legend-text {
+    font-size: var(--cc-body2-size);
+    color: var(--cc-text-secondary);
+    font-weight: var(--cc-font-medium);
+  }
+  .legend-pct {
+    margin-left: auto;
+    font-size: var(--cc-body2-size);
+    font-weight: var(--cc-font-bold);
+    color: var(--cc-text-primary);
+  }
+
+  /* Quick Actions — glass cards, app spacing */
+  .quick-actions {
+    margin-bottom: var(--cc-section-gap);
+  }
+  .actions-row {
+    display: flex;
+    gap: var(--cc-list-gap);
+  }
+  .action-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--cc-card-padding) var(--cc-space-md);
+    background: var(--cc-glass-bg);
+    border: 1px solid var(--cc-glass-border);
+    border-radius: var(--cc-radius-card);
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .action-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: var(--cc-space-lg);
+    right: var(--cc-space-lg);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cc-glass-border), transparent);
+  }
+  .action-btn:hover {
+    border-color: var(--cc-primary-alpha20);
+    box-shadow: var(--cc-shadow-glow);
+  }
+  .action-icon {
+    width: var(--cc-touch-min);
+    height: var(--cc-touch-min);
+    border-radius: var(--cc-radius-button);
+    background: var(--cc-primary-alpha10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  .action-icon svg {
+    width: var(--cc-body-icon-size);
+    height: var(--cc-body-icon-size);
+    color: var(--cc-primary);
+  }
+  .action-label {
+    font-size: 13px;
+    font-weight: var(--cc-font-semibold);
+    color: var(--cc-text-primary);
+  }
+
+  /* Recent Investments — app list gap 12px, padding 20 */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--cc-space-lg);
+  }
+  .view-all {
+    display: flex;
+    align-items: center;
+    gap: var(--cc-inner-gap);
+    color: var(--cc-primary);
+    font-size: var(--cc-body2-size);
+    font-weight: var(--cc-font-semibold);
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .view-all:hover {
+    opacity: 0.8;
+  }
+  .view-all svg {
+    width: var(--cc-body-icon-size);
+    height: var(--cc-body-icon-size);
+  }
+  .investment-item {
+    display: flex;
+    align-items: center;
+    padding: var(--cc-space-lg);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .investment-item:hover {
+    background: var(--cc-glass-highlight);
+  }
+  .investment-icon {
+    width: var(--cc-touch-min);
+    height: var(--cc-touch-min);
+    border-radius: var(--cc-radius-button);
+    background: var(--cc-primary-alpha10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 14px;
+    flex-shrink: 0;
+  }
+  .investment-icon svg {
+    width: var(--cc-body-icon-size);
+    height: var(--cc-body-icon-size);
+    color: var(--cc-primary);
+  }
+  .investment-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .investment-name {
+    font-size: var(--cc-subtitle2-size);
+    font-weight: var(--cc-font-semibold);
+    color: var(--cc-text-primary);
+    margin-bottom: var(--cc-inner-gap);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .investment-type {
+    font-size: 13px;
+    color: var(--cc-text-tertiary);
+  }
+  .investment-value {
+    display: flex;
+    align-items: center;
+    gap: var(--cc-space-sm);
+    flex-shrink: 0;
+  }
+  .investment-amount {
+    font-size: var(--cc-subtitle2-size);
+    font-weight: var(--cc-font-bold);
+    color: var(--cc-text-primary);
+  }
+  .investment-value svg {
+    width: 18px;
+    height: 18px;
+    color: var(--cc-text-tertiary);
+  }
+  .inv-divider {
+    height: 1px;
+    margin: 0 var(--cc-space-lg);
+    background: linear-gradient(90deg, transparent, var(--cc-glass-highlight), transparent);
+  }
+
+  /* Tab Bar — app nav icon 24px, safe area */
+  .nav-tabs {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 390px;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: var(--cc-space-sm) env(safe-area-inset-right) calc(var(--cc-section-gap) + env(safe-area-inset-bottom)) env(safe-area-inset-left);
+    background: rgba(10,10,10,0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--cc-border);
+    z-index: 100;
+  }
+  .tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--cc-inner-gap);
+    cursor: pointer;
+    flex: 1;
+    padding-top: var(--cc-inner-gap);
+    transition: opacity 0.2s;
+  }
+  .tab:hover {
+    opacity: 0.8;
+  }
+  .tab svg {
+    width: var(--cc-nav-icon-size);
+    height: var(--cc-nav-icon-size);
+  }
+  .tab-label {
+    font-size: 10px;
+    font-weight: var(--cc-font-medium);
+  }
+  .tab.active svg { color: var(--cc-primary); }
+  .tab.active .tab-label { color: var(--cc-primary); }
+  .tab.inactive svg { color: var(--cc-text-tertiary); }
+  .tab.inactive .tab-label { color: var(--cc-text-tertiary); }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <div class="header-greeting">Welcome back</div>
+      <div class="header-title">Dashboard</div>
+    </div>
+    <div class="header-actions">
+      <a href="support.html" class="settings-btn" title="Support"><span class="cc-icon cc-icon-20" data-icon="help-circle"></span></a>
+      <a href="settings.html" class="settings-btn" title="Settings"><span class="cc-icon cc-icon-20" data-icon="settings"></span></a>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Net Worth Card -->
+    <div class="glass-card net-worth-card">
+      <div class="nw-label">Total Portfolio Value</div>
+      <div class="nw-value-row">
+        <span class="nw-currency">$</span>
+        <span class="nw-value">127,450.00</span>
+      </div>
+      <div class="nw-change">
+        <span class="cc-icon cc-icon-20" data-icon="trending-up"></span>
+        <span class="nw-change-text">+10.8%</span>
+      </div>
+      <div class="nw-divider"></div>
+      <div class="nw-stats">
+        <div class="nw-stat">
+          <div class="nw-stat-label">Invested</div>
+          <div class="nw-stat-value">$115,000.00</div>
+        </div>
+        <div class="nw-stat-divider"></div>
+        <div class="nw-stat">
+          <div class="nw-stat-label">Returns</div>
+          <div class="nw-stat-value green">+$12,450</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Asset Allocation -->
+    <div class="asset-allocation">
+      <div class="section-title">Asset Allocation</div>
+      <div class="donut-container">
+        <div class="donut-chart">
+          <svg viewBox="0 0 180 180" width="180" height="180">
+            <!-- Real Estate 65% -->
+            <circle cx="90" cy="90" r="70" fill="none" stroke="#00ffc8" stroke-width="24"
+              stroke-dasharray="285.88 153.94" stroke-dashoffset="0" stroke-linecap="round"/>
+            <!-- Commodities 25% -->
+            <circle cx="90" cy="90" r="70" fill="none" stroke="#30D158" stroke-width="24"
+              stroke-dasharray="109.96 329.87" stroke-dashoffset="-285.88" stroke-linecap="round"/>
+            <!-- Cash 10% -->
+            <circle cx="90" cy="90" r="70" fill="none" stroke="#5AC8FA" stroke-width="24"
+              stroke-dasharray="43.98 395.84" stroke-dashoffset="-395.84" stroke-linecap="round"/>
+          </svg>
+          <div class="donut-center">
+            <div class="donut-center-value">$127K</div>
+            <div class="donut-center-label">Total</div>
+          </div>
+        </div>
+      </div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#00ffc8"></div>
+          <span class="legend-text">Real Estate</span>
+          <span class="legend-pct">65%</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#30D158"></div>
+          <span class="legend-text">Commodities</span>
+          <span class="legend-pct">25%</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#5AC8FA"></div>
+          <span class="legend-text">Cash</span>
+          <span class="legend-pct">10%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <div class="section-title">Quick Actions</div>
+      <div class="actions-row">
+        <a href="wallet.html" class="action-btn">
+          <div class="action-icon"><span class="cc-icon cc-icon-20" data-icon="arrow-down"></span></div>
+          <span class="action-label">Deposit</span>
+        </a>
+        <a href="properties.html" class="action-btn">
+          <div class="action-icon"><span class="cc-icon cc-icon-20" data-icon="business"></span></div>
+          <span class="action-label">Properties</span>
+        </a>
+        <a href="commodities.html" class="action-btn">
+          <div class="action-icon"><span class="cc-icon cc-icon-20" data-icon="cube"></span></div>
+          <span class="action-label">Commodities</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Recent Investments -->
+    <div>
+      <div class="section-header">
+        <div class="section-title" style="margin-bottom:0">Recent Investments</div>
+        <a href="portfolio.html" class="view-all">
+          View All
+          <span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span>
+        </a>
+      </div>
+      <div class="glass-card-no-pad">
+        <!-- Item 1 -->
+        <a href="property-detail.html" class="investment-item">
+          <div class="investment-icon"><span class="cc-icon cc-icon-20" data-icon="business"></span></div>
+          <div class="investment-info">
+            <div class="investment-name">Marina Heights Residency</div>
+            <div class="investment-type">Property</div>
+          </div>
+          <div class="investment-value">
+            <span class="investment-amount">$25,000.00</span>
+            <span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span>
+          </div>
+        </a>
+        <div class="inv-divider"></div>
+        <!-- Item 2 -->
+        <a href="commodity-detail.html" class="investment-item">
+          <div class="investment-icon"><span class="cc-icon cc-icon-20" data-icon="cube"></span></div>
+          <div class="investment-info">
+            <div class="investment-name">Gold Reserve Fund</div>
+            <div class="investment-type">Commodity</div>
+          </div>
+          <div class="investment-value">
+            <span class="investment-amount">$15,000.00</span>
+            <span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span>
+          </div>
+        </a>
+        <div class="inv-divider"></div>
+        <!-- Item 3 -->
+        <a href="property-detail.html" class="investment-item">
+          <div class="investment-icon"><span class="cc-icon cc-icon-20" data-icon="business"></span></div>
+          <div class="investment-info">
+            <div class="investment-name">Palm View Villas</div>
+            <div class="investment-type">Property</div>
+          </div>
+          <div class="investment-value">
+            <span class="investment-amount">$10,000.00</span>
+            <span class="cc-icon cc-icon-20" data-icon="chevron-forward"></span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Tab Bar -->
+  <nav class="nav-tabs">
+    <a href="dashboard.html" class="tab active">
+      <span class="cc-icon cc-icon-24" data-icon="home"></span>
+      <span class="tab-label">Dashboard</span>
+    </a>
+    <a href="properties.html" class="tab inactive">
+      <span class="cc-icon cc-icon-24" data-icon="business"></span>
+      <span class="tab-label">Properties</span>
+    </a>
+    <a href="commodities.html" class="tab inactive">
+      <span class="cc-icon cc-icon-24" data-icon="cube"></span>
+      <span class="tab-label">Commodities</span>
+    </a>
+    <a href="wallet.html" class="tab inactive">
+      <span class="cc-icon cc-icon-24" data-icon="wallet"></span>
+      <span class="tab-label">Wallet</span>
+    </a>
+  </nav>
+
+</div>
+<script src="icons-ref.js"></script>
+<script>document.addEventListener('DOMContentLoaded', function(){ if (window.CC_Icons) CC_Icons.inject(); });</script>
+<script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function(){});</script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Click Capital — Onboarding</title>
+  <link rel="icon" href="../assets/favicon.png" type="image/png">
+  <link rel="stylesheet" href="shared-native.css">
+  <link rel="stylesheet" href="design-tokens.css">
+<link rel="stylesheet" href="preview-alignment.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #000;
+      --card-bg: #0F0F0F;
+      --border: #1F1F1F;
+      --accent: #00ffc8;
+      --text-primary: #FFFFFF;
+      --text-secondary: #BBBBBB;
+      --text-tertiary: #999999;
+      --success: #30D158;
+      --warning: #FF9500;
+      --danger: #FF3B30;
+      --info: #5AC8FA;
+      --glass-bg: rgba(15, 15, 15, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --accent-alpha10: rgba(0, 255, 200, 0.1);
+      --accent-alpha20: rgba(0, 255, 200, 0.2);
+      --radius: 12px;
+    }
+
+    html, body {
+      height: 100%;
+      background: #000;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow: hidden;
+    }
+
+    .phone-frame {
+      max-width: 390px;
+      margin: 0 auto;
+      min-height: 100vh;
+      height: 100vh;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Language selector */
+    .lang-btn {
+      position: absolute;
+      top: calc(16px + env(safe-area-inset-top));
+      right: calc(16px + env(safe-area-inset-right));
+      z-index: 100;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .lang-btn:hover {
+      background: rgba(25, 25, 25, 0.8);
+      border-color: rgba(255,255,255,0.12);
+    }
+    .lang-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: var(--text-secondary);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Slides container */
+    .slides-viewport {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .slide-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+    }
+
+    .slide-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 20%,
+        rgba(0,0,0,0.3) 45%,
+        rgba(0,0,0,0.75) 65%,
+        rgba(0,0,0,0.95) 80%,
+        #000 100%
+      );
+    }
+
+    .slide-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0 24px 140px;
+      z-index: 10;
+    }
+
+    .slide-title {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      line-height: 1.2;
+      letter-spacing: -0.3px;
+      margin-bottom: 12px;
+    }
+
+    .slide-subtitle {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      font-weight: 400;
+    }
+
+    /* Bottom controls */
+    .controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0 calc(24px + env(safe-area-inset-left)) calc(40px + env(safe-area-inset-bottom)) calc(24px + env(safe-area-inset-right));
+      z-index: 20;
+    }
+
+    .dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .dot {
+      height: 8px;
+      width: 8px;
+      border-radius: 999px;
+      background: var(--border);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .dot.active {
+      width: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(0, 255, 200, 0.4);
+    }
+
+    .next-btn {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: var(--radius);
+      background: var(--accent);
+      color: #000;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .next-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .next-btn:hover::before {
+      opacity: 1;
+    }
+    .next-btn:active {
+      transform: scale(0.98);
+    }
+    .next-btn:hover {
+      box-shadow: 0 4px 24px rgba(0, 255, 200, 0.35);
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-frame">
+    <!-- Language selector -->
+    <button class="lang-btn" aria-label="Change language" onclick="alert('Language options coming soon')">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M2 12h20"/>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/>
+      </svg>
+    </button>
+
+    <!-- Slides -->
+    <div class="slides-viewport">
+      <div class="slide active" data-index="0">
+        <img class="slide-image" src="../assets/images/onboarding/onboarding-1.jpeg" alt="Fractional luxury opportunities">
+        <div class="slide-gradient"></div>
+        <div class="slide-content">
+          <h1 class="slide-title">ENTER THE WORLD OF FRACTIONAL LUXURY OPPORTUNITIES.</h1>
+          <p class="slide-subtitle">Own premium assets through fractional ownership. Access exclusive opportunities previously reserved for institutions.</p>
+        </div>
+      </div>
+
+      <div class="slide" data-index="1">
+        <img class="slide-image" src="../assets/images/onboarding/onboarding-2.jpeg" alt="Alternative opportunities">
+        <div class="slide-gradient"></div>
+        <div class="slide-content">
+          <h1 class="slide-title">EXPLORE ALTERNATIVE OPPORTUNITIES.</h1>
+          <p class="slide-subtitle">Discover high-value real estate and unique opportunities beyond traditional markets. Experience institutional-grade transparency.</p>
+        </div>
+      </div>
+
+      <div class="slide" data-index="2">
+        <img class="slide-image" src="../assets/images/onboarding/onboarding-3.jpeg" alt="Rare commodities">
+        <div class="slide-gradient"></div>
+        <div class="slide-content">
+          <h1 class="slide-title">ACCESS RARE COMMODITIES.</h1>
+          <p class="slide-subtitle">Explore rare global commodities through fractional ownership. Access unique opportunities with complete transparency.</p>
+        </div>
+      </div>
+
+      <div class="slide" data-index="3">
+        <img class="slide-image" src="../assets/images/onboarding/onboarding-4.jpeg" alt="Start your journey">
+        <div class="slide-gradient"></div>
+        <div class="slide-content">
+          <h1 class="slide-title">START YOUR JOURNEY.</h1>
+          <p class="slide-subtitle">Join a global community. Begin with fractional ownership and complete control.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom controls -->
+    <div class="controls">
+      <div class="dots">
+        <div class="dot active" data-dot="0"></div>
+        <div class="dot" data-dot="1"></div>
+        <div class="dot" data-dot="2"></div>
+        <div class="dot" data-dot="3"></div>
+      </div>
+      <button class="next-btn" id="nextBtn">Next</button>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      let current = 0;
+      const total = 4;
+      const slides = document.querySelectorAll('.slide');
+      const dots = document.querySelectorAll('.dot');
+      const btn = document.getElementById('nextBtn');
+
+      function goTo(index) {
+        slides.forEach((s, i) => s.classList.toggle('active', i === index));
+        dots.forEach((d, i) => d.classList.toggle('active', i === index));
+        current = index;
+        btn.textContent = current === total - 1 ? 'Get Started' : 'Next';
+      }
+
+      btn.addEventListener('click', () => {
+        if (current === total - 1) {
+          window.location.href = 'login.html';
+        } else {
+          goTo(current + 1);
+        }
+      });
+
+      // Dot navigation
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => goTo(i));
+      });
+
+      // Optional: swipe support
+      let startX = 0;
+      const viewport = document.querySelector('.slides-viewport');
+      viewport.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+      viewport.addEventListener('touchend', e => {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) {
+          if (diff > 0 && current < total - 1) goTo(current + 1);
+          if (diff < 0 && current > 0) goTo(current - 1);
+        }
+      }, { passive: true });
+    })();
+  </script>
+<script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function(){});</script>
+</body>
+</html>
