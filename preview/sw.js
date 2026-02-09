@@ -3,7 +3,15 @@ const CACHE_NAME = 'click-capital-preview-v2';
 
 const PRECACHE = [
   './index.html',
+  './',
   './shared-native.css',
+  './design-tokens.css',
+  './preview-alignment.css',
+  './favicon.png',
+  './icon.png',
+  './adaptive-icon.png',
+  './logo.png',
+  './manifest.json',
 ];
 
 self.addEventListener('install', (event) => {
