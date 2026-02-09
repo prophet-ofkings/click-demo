@@ -12,6 +12,11 @@ const PRECACHE = [
   './adaptive-icon.png',
   './logo.png',
   './manifest.json',
+  './onboarding.html',
+  './images/onboarding/onboarding-1.jpeg',
+  './images/onboarding/onboarding-2.jpeg',
+  './images/onboarding/onboarding-3.jpeg',
+  './images/onboarding/onboarding-4.jpeg',
 ];
 
 self.addEventListener('install', (event) => {
